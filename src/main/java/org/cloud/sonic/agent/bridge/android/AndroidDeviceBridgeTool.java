@@ -764,7 +764,8 @@ public class AndroidDeviceBridgeTool implements ApplicationListener<ContextRefre
         public void run() {
             forward(iDevice, port, 6790);
             try {
-                iDevice.executeShellCommand("am instrument -w io.appium.uiautomator2.server.test/androidx.test.runner.AndroidJUnitRunner -e disableAnalytics true",
+                /*
+                iDevice.executeShellCommand("am instrument -w io.appium.uiautomator2.server.test/androidx.test.runner.AndroidJUnitRunner -e DISABLE_SUPPRESS_ACCESSIBILITY_SERVICES true -e disableAnalytics true",
                         new IShellOutputReceiver() {
                             @Override
                             public void addOutput(byte[] bytes, int i, int i1) {
@@ -789,6 +790,7 @@ public class AndroidDeviceBridgeTool implements ApplicationListener<ContextRefre
                                 return false;
                             }
                         }, 0, TimeUnit.MILLISECONDS);
+                */
             } catch (Exception ignored) {
             } finally {
                 removeForward(iDevice, port, 6790);
