@@ -131,7 +131,7 @@ public class AndroidWSServer implements IAndroidWSServer {
 
         AndroidSupplyTool.startShare(udId, session);
 
-        openDriver(iDevice, session);
+        // openDriver(iDevice, session);
 
         String currentIme = AndroidDeviceBridgeTool.executeCommand(iDevice, "settings get secure default_input_method");
         if (!currentIme.contains("org.cloud.sonic.android/.keyboard.SonicKeyboard")) {
@@ -329,11 +329,13 @@ public class AndroidWSServer implements IAndroidWSServer {
                         }
                         BytesTool.sendText(session, result.toJSONString());
                     });
+                    /*
                     case "openDriver" -> {
                         if (androidStepHandler == null || androidStepHandler.getAndroidDriver() == null) {
                             openDriver(iDevice, session);
                         }
                     }
+                    */
                     case "closeDriver" -> {
                         if (androidStepHandler != null && androidStepHandler.getAndroidDriver() != null) {
                             androidStepHandler.closeAndroidDriver();
