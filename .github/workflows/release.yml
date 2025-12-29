@@ -1,12 +1,15 @@
 name: release to github
 
 on:
+  push:
+    tags:
+      - "v*.*.*"
   workflow_dispatch:
     inputs:
-      branch:
-        description: '要构建的分支'
+      tags:
+        description: '要构建的tag'
         required: true
-        default: 'main'
+        default: 'v2.7.3'
 
 jobs:
   create:
