@@ -85,7 +85,7 @@ public class ScrcpyInputSocketThread extends Thread {
     }
 
     private static final int BUFFER_SIZE = 1024 * 1024 * 10;
-    private static final int READ_BUFFER_SIZE = 1024 * 5;
+    private static final int READ_BUFFER_SIZE = 1024 * 10;
 
     @Override
     public void run() {
@@ -97,6 +97,16 @@ public class ScrcpyInputSocketThread extends Thread {
             videoSocket.connect(new InetSocketAddress("localhost", scrcpyPort));
             inputStream = videoSocket.getInputStream();
             if (videoSocket.isConnected()) {
+                // 2. 读取Dummy Byte（1字节）并校验
+                byte[] dummyByte = readExactBytes(inputStream, 1);
+                log.info("scrcpy服务-> " + "Input dummyByte.length=" + dummyByte.length);
+                // 4. 读取设备名（64字节，UTF-8解码，去除末尾\x00）
+                byte[] deviceNameBytes = readExactBytes(inputStream, 64);
+                log.info("scrcpy服务-> " + "Input deviceNameBytes.length=" + deviceNameBytes.length);
+                // 5. 读取分辨率（4字节，大端序解析>HH）
+                byte[] resBytes = readExactBytes(inputStream, 4);
+                log.info("scrcpy服务-> " + "Input resBytes.length=" + resBytes.length);
+
                 String sizeTotal = AndroidDeviceBridgeTool.getScreenSize(iDevice);
                 JSONObject size = new JSONObject();
                 size.put("msg", "size");
@@ -157,6 +167,27 @@ public class ScrcpyInputSocketThread extends Thread {
         if (session != null) {
             ScreenMap.getMap().remove(session);
         }
+    }
+
+    /**
+     * 精准读取指定长度的字节（解决InputStream.read可能读取不完整的问题）
+     *
+     * @param in     输入流
+     * @param length 要读取的字节数
+     * @return 读取到的字节数组
+     * @throws IOException 读取失败/超时
+     */
+    private byte[] readExactBytes(InputStream in, int length) throws IOException {
+        byte[] buffer = new byte[length];
+        int totalRead = 0;
+        while (totalRead < length) {
+            int read = in.read(buffer, totalRead, length - totalRead);
+            if (read == -1) { // 流提前结束
+                throw new IOException("输入流提前结束，期望读取" + length + "字节，实际读取" + totalRead + "字节");
+            }
+            totalRead += read;
+        }
+        return buffer;
     }
 }
 

@@ -716,12 +716,14 @@ public class AndroidDeviceBridgeTool implements ApplicationListener<ContextRefre
         if (!checkUiaApkVersion(iDevice)) {
             uninstall(iDevice, "io.appium.uiautomator2.server");
             uninstall(iDevice, "io.appium.uiautomator2.server.test");
+            /* 禁止安装uiautomator2相关app
             install(iDevice, "plugins/sonic-appium-uiautomator2-server.apk");
             install(iDevice, "plugins/sonic-appium-uiautomator2-server-test.apk");
             executeCommand(iDevice, "appops set io.appium.uiautomator2.server RUN_IN_BACKGROUND allow");
             executeCommand(iDevice, "appops set io.appium.uiautomator2.server.test RUN_IN_BACKGROUND allow");
             executeCommand(iDevice, "dumpsys deviceidle whitelist +io.appium.uiautomator2.server");
             executeCommand(iDevice, "dumpsys deviceidle whitelist +io.appium.uiautomator2.server.test");
+            */
         }
         UiaThread uiaThread = new UiaThread(iDevice, port);
         uiaThread.start();
@@ -764,7 +766,7 @@ public class AndroidDeviceBridgeTool implements ApplicationListener<ContextRefre
         public void run() {
             forward(iDevice, port, 6790);
             try {
-                /*
+                /* 禁止启用uiautomator2
                 iDevice.executeShellCommand("am instrument -w io.appium.uiautomator2.server.test/androidx.test.runner.AndroidJUnitRunner -e DISABLE_SUPPRESS_ACCESSIBILITY_SERVICES true -e disableAnalytics true",
                         new IShellOutputReceiver() {
                             @Override
