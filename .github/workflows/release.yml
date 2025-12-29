@@ -35,7 +35,7 @@ jobs:
       - name: Upload yml To Github Release
         uses: xresloader/upload-to-github-release@v1.3.4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
         with:
           file: src/main/docker/docker-compose.yml;src/main/docker/docker-compose-zh.yml
           tag_name: ${{ steps.previoustag.outputs.tag }}
@@ -149,7 +149,7 @@ jobs:
       - name: Upload Zip To Github Release
         uses: xresloader/upload-to-github-release@v1.3.4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
         with:
           file: sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}.zip
           tag_name: ${{ steps.previoustag.outputs.tag }}
