@@ -1,6 +1,15 @@
 name: maven compile test
 
-on: [ pull_request ]
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: '要构建的tag'
+        required: true
+        default: 'v2.7.3'
 
 jobs:
   build:
