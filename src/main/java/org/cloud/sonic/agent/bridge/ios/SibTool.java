@@ -91,8 +91,9 @@ public class SibTool implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(@NonNull ContextRefreshedEvent event) {
-        init();
-        logger.info("Enable iOS Module");
+        // init();
+        // logger.info("Enable iOS Module");
+        logger.info("Disable iOS Module");
     }
 
     public void init() {

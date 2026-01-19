@@ -47,6 +47,7 @@ public class LaunchTool implements ApplicationRunner {
                 TransportConnectionThread.TIME_UNIT
         );
         TransportWorker.readQueue();
+        /*
         new Thread(() -> {
             File file = new File("plugins/sonic-go-mitmproxy-ca-cert.pem");
             if (!file.exists()) {
@@ -67,6 +68,7 @@ public class LaunchTool implements ApplicationRunner {
                 }
             }
         }).start();
+        */
     }
 
     @PreDestroy

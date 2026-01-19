@@ -236,14 +236,15 @@ public class EnvCheckTool {
         String type = "Check apk files";
         printChecking(type);
         File saa = new File("plugins" + File.separator + "sonic-android-apk.apk");
-        File saus = new File("plugins" + File.separator + "sonic-appium-uiautomator2-server.apk");
-        File saust = new File("plugins" + File.separator + "sonic-appium-uiautomator2-server-test.apk");
-        if (saa.exists() && saus.exists() && saust.exists()) {
+        //File saus = new File("plugins" + File.separator + "sonic-appium-uiautomator2-server.apk");
+        //File saust = new File("plugins" + File.separator + "sonic-appium-uiautomator2-server-test.apk");
+        if (saa.exists()) {// && saus.exists() && saust.exists()) {
             printPass(type);
             return true;
         } else {
             printFail(type);
-            throw new RuntimeException("Missing file! Please ensure that `plugins` folders (containing `sonic-android-apk.apk` `sonic-appium-uiautomator2-server.apk` `sonic-appium-uiautomator2-server-test.apk`) in the current directory");
+            //throw new RuntimeException("Missing file! Please ensure that `plugins` folders (containing `sonic-android-apk.apk` `sonic-appium-uiautomator2-server.apk` `sonic-appium-uiautomator2-server-test.apk`) in the current directory");
+            throw new RuntimeException("Missing file! Please ensure that `plugins` folders (containing `sonic-android-apk.apk`) in the current directory");
         }
     }
 
@@ -251,7 +252,7 @@ public class EnvCheckTool {
         String type = "Check all plugins";
         File plugins = new File("plugins");
         if (plugins.exists()) {
-            if (checkADB() && checkSAS() && checkSIB() && checkSGM() && checkAPKs()) {
+            if (checkADB() && checkSAS() && checkAPKs()) {// && checkSIB() && checkSGM()
                 printPass(type);
             }
         } else {
@@ -348,8 +349,8 @@ public class EnvCheckTool {
     public String toString() {
         return printInfo("System: ") + system + "\n" +
                 printInfo("ADB version: ") + adbVersion + "\n" +
-                printInfo("sonic-android-supply version: ") + sasPrintVersion + "\n" +
-                printInfo("sonic-ios-bridge version: ") + sibPrintVersion + "\n" +
-                printInfo("sonic-go-mitmproxy version: ") + sgmPrintVersion;
+                printInfo("sonic-android-supply version: ") + sasPrintVersion;// + "\n" +
+                //printInfo("sonic-ios-bridge version: ") + sibPrintVersion + "\n" +
+                //printInfo("sonic-go-mitmproxy version: ") + sgmPrintVersion;
     }
 }
