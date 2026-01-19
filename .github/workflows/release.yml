@@ -87,34 +87,6 @@ jobs:
         run: mvn clean package -Dplatform=${{ matrix.platform }} -Dmaven.test.skip=true
       - name: mvJar-linux86
         run: cp -r target/sonic-agent-${{ matrix.platform }}.jar sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/
-      - name: copy
-        run: cp -r config/ mini/ sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/
-      - name: adb-download
-        uses: robinraju/release-downloader@v1.4
-        with:
-          repository: SonicCloudOrg/sonic-adb-binary
-          latest: true
-          fileName: "*"
-      - name: adb-unzip
-        run: unzip platform-tools_r34.0.3-${{matrix.adb}}.zip && mv platform-tools/* sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/plugins/
-      - name: sas-download
-        uses: robinraju/release-downloader@v1.4
-        with:
-          repository: SonicCloudOrg/sonic-android-supply
-          latest: true
-          fileName: "*"
-      - name: sas-untar
-        run: tar zxvf *_${{matrix.depend}}.tar.gz && rm *_${{matrix.depend}}.tar.gz && mv sas${{matrix.tail}} sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/plugins/sonic-android-supply${{matrix.tail}}
-      - name: saa-download
-        uses: robinraju/release-downloader@v1.4
-        with:
-          repository: SonicCloudOrg/sonic-android-apk
-          latest: true
-          fileName: "sonic-android-apk.apk"
-      - name: saa
-        run: cp sonic-android-apk.apk sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/plugins/
-      - name: sas
-        run: cp plugins/sonic-android-scrcpy.jar sonic-agent-${{ steps.previoustag.outputs.tag }}-${{matrix.depend}}/plugins/
       - name: zip
         uses: TheDoctor0/zip-release@0.6.2
         with:
