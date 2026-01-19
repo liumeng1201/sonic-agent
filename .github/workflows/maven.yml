@@ -9,7 +9,6 @@ on:
       tags:
         description: '要构建的tag'
         required: true
-        default: 'v2.7.4'
 
 jobs:
   build:
